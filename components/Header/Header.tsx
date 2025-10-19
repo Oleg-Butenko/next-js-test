@@ -1,7 +1,13 @@
-import css from './Header.module.css';
-import Link from 'next/link';
+// components/Header/Header.tsx
 
-const Header = () => {
+import Link from 'next/link';
+import { getCategories } from '@/lib/api';
+import CategoriesMenu from '../CategoriesMenu/CategoriesMenu';
+import css from './Header.module.css';
+
+const Header = async () => {
+  const categories = await getCategories();
+
   return (
     <header className={css.header}>
       <Link href="/" aria-label="Home">
@@ -10,16 +16,19 @@ const Header = () => {
       <nav aria-label="Main Navigation">
         <ul className={css.navigation}>
           <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/notes">Notes</Link>
+            <CategoriesMenu categories={categories} />
           </li>
           <li>
             <Link href="/profile">Profile</Link>
           </li>
           <li>
             <Link href="/about">About</Link>
+          </li>
+          <li>
+            <Link href="/sign-in">Login</Link>
+          </li>
+          <li>
+            <Link href="/sign-up">Register</Link>
           </li>
         </ul>
       </nav>
